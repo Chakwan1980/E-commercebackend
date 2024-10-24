@@ -1,22 +1,19 @@
-# Usa una imagen base de Node.js
-FROM node:22-alpine
+FROM node:14
 
-# Establece el directorio de trabajo
+# Establecer el directorio de trabajo
 WORKDIR /app
 
-# Copia solo los archivos necesarios para instalar dependencias primero
-COPY package*.json /app/
+# Copiar package.json y package-lock.json
+COPY package*.json ./
 
-# Instala las dependencias de Node.js
-RUN npm install --legacy-peer-deps
+# Instalar dependencias
+RUN npm install
 
-
-
-# Luego copia el resto de los archivos del proyecto
+# Copiar el resto de los archivos
 COPY . .
 
-# Expone el puerto en el que corre la aplicación
+# Exponer el puerto que usará la aplicación
 EXPOSE 3000
 
-# Comando para iniciar la aplicación en modo desarrollo
-CMD ["npm", "run", "dev"]
+# Comando para ejecutar la aplicación
+CMD ["npm", "start"]
