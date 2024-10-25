@@ -26,7 +26,8 @@ const createProductTable = async () => {
                 product_description TEXT NOT NULL,
                 product_code VARCHAR(50) NOT NULL UNIQUE,
                 price DECIMAL(10, 2) NOT NULL,
-                rating DECIMAL(2, 1) CHECK (rating >= 0 AND rating <= 5) DEFAULT 0
+                rating DECIMAL(2, 1) CHECK (rating >= 0 AND rating <= 5) DEFAULT 0,
+                image_url VARCHAR(255)
             );
         `);
         console.log('Products table created successfully');
