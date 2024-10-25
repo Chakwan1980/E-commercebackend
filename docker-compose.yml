@@ -37,6 +37,7 @@ services:
     depends_on:
       postgres_db:
         condition: service_healthy
+        
 
 networks:
   ecommerce-app-nw:
