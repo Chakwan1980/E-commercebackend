@@ -1,0 +1,47 @@
+services:
+  postgres_db:
+    image: postgres:latest
+    container_name: postgres-db
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=ecommercedb
+    volumes:
+      - ecommerce-app-data:/var/lib/postgresql/data
+    networks:
+      - ecommerce-app-nw
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  e-commerce-app:
+    build:
+      context: ./ 
+      dockerfile: Dockerfile
+    container_name: e-commerce-app
+    environment:
+      - DB_USER=postgres
+      - DB_HOST=postgres-db
+      - DB_NAME=ecommercedb
+      - DB_PASSWORD=password
+      - DB_PORT=5432
+    networks:
+      - ecommerce-app-nw
+    ports:
+      - "3030:5000"
+    command: npm run dev
+    depends_on:
+      postgres_db:
+        condition: service_healthy
+        
+
+networks:
+  ecommerce-app-nw:
+    driver: bridge
+
+volumes:
+  ecommerce-app-data:
