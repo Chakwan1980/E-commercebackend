@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: e-commerce-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: e-commerce-app
+  template:
+    metadata:
+      labels:
+        app: e-commerce-app
+    spec:
+      containers:
+      - name: e-commerce-app
+        image: rosaflores/e-commerce-backend:latest  
+        env:
+        - name: DB_USER
+          value: "postgres"
+        - name: DB_HOST
+          value: "postgres-db"
+        - name: DB_NAME
+          value: "ecommercedb"
+        - name: DB_PASSWORD
+          value: "password"
+        - name: DB_PORT
+          value: "5432"
+        ports:
+        - containerPort: 5000
+        command: ["npm", "run", "dev"]
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: e-commerce-app
+spec:
+  ports:
+  - port: 3030
+    targetPort: 5000
+  selector:
+    app: e-commerce-app
