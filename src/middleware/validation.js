@@ -7,6 +7,8 @@ const productSchema = Joi.object({
     product_code: Joi.string().min(3).max(50).required(),
     price: Joi.number().precision(2).positive().required(),
     rating: Joi.number().min(0).max(5).optional(),
+    image_url: Joi.string().uri().optional(),
+    category: Joi.string().min(3).max(100).required(),
 });
 
 // Middleware to validate products
