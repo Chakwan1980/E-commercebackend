@@ -1,0 +1,100 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: e-commerce-app-api-service
+spec:
+  selector:
+    app: e-commerce-app-api
+  ports:
+    - port: 3000
+      targetPort: 3000
+  type: LoadBalancer  
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: e-commerce-app-api
+spec:
+  replicas: 1
+  selector: 
+    matchLabels:
+      app: e-commerce-app-api   
+  template:  # Cambiado de "temple" a "template"
+    metadata:
+      labels:
+        app: e-commerce-app-api
+        environment: test  # Cambiado de "enviroment" a "environment"
+    spec:
+      containers:
+        - name: e-commerce-app-api
+          image: rosaflores/e-commerce-backend:latest
+          resources:
+            requests:
+              memory: "64Mi"
+              cpu: "125m"
+            limits:
+              memory: "128Mi"
+              cpu: "250m"
+          ports:
+            - containerPort: 3000
+          imagePullPolicy: Always
+          env:
+            - name: DB_USER
+              valueFrom:
+                secretKeyRef:
+                  name: e-commerce-app-secret
+                  key: DB_USER
+            - name: DB_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: e-commerce-app-config
+                  key: DB_HOST
+            - name: DB_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: e-commerce-app-config
+                  key: DB_NAME
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: e-commerce-app-secret
+                  key: DB_PASSWORD
+            - name: DB_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: e-commerce-app-config
+                  key: DB_PORT
+          livenessProbe:
+            httpGet:
+              path: /e-commerce 
+              port: 3000
+            initialDelaySeconds: 5
+            periodSeconds: 5
+            timeoutSeconds: 5
+            failureThreshold: 5
+            successThreshold: 1
+
+---
+
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: e-commerce-app-api-hpa
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: e-commerce-app-api
+  minReplicas: 1
+  maxReplicas: 4
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: 50
+
+

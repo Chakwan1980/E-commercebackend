@@ -1,0 +1,71 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: e-commerce-app-api-service
+spec:
+  selector:
+    app: e-commerce-app-db
+  ports:
+  - protocol: TCP
+    port: 5432
+    targetPort: 5432
+  type: ClusterIP
+
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: e-commerce-app-database
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: e-commerce-app-db
+  template:
+    metadata:
+      labels:
+        app: e-commerce-app-db
+        environment: test
+    spec:
+      containers:
+      - name: e-commerce-postgres-db
+        image: postgres:16.4
+        resources:
+          requests:
+            memory: "128Mi"
+            cpu: "250m"
+          limits:
+            memory: "256Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 5432
+        env:
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: e-commerce-app-secret
+              key: DB_PASSWORD
+        - name: POSTGRES_DB
+          valueFrom:
+            configMapKeyRef:
+              name: e-commerce-app-config
+              key: DB_NAME
+        livenessProbe:
+          exec:
+            command:
+            - "pg_isready"
+            - "-U"
+            - "postgres"
+          initialDelaySeconds: 5
+          periodSeconds: 5
+          timeoutSeconds: 5
+          failureThreshold: 5
+          successThreshold: 1
+        volumeMounts:
+        - name: e-commerce-db-volume
+          mountPath: /var/lib/postgresql/data
+      volumes:
+      - name: e-commerce-db-volume
+        persistentVolumeClaim:
+          claimName: e-commerce-database-pvc
