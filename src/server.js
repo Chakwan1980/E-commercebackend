@@ -12,7 +12,7 @@ const pool = new Pool({
     database: process.env.DB_NAME,
     password: process.env.DB_PASSWORD,
     port: process.env.DB_PORT,
-    ssl: false, // 
+    ssl: false, // Considera configurarlo según tu entorno
 });
 
 const createProductTable = async () => {
@@ -26,7 +26,6 @@ const createProductTable = async () => {
                 product_description TEXT NOT NULL,
                 product_code VARCHAR(50) NOT NULL UNIQUE,
                 price DECIMAL(10, 2) NOT NULL,
-                rating DECIMAL(2, 1) CHECK (rating >= 0 AND rating <= 5) DEFAULT 0,
                 image_url VARCHAR(255),
                 category VARCHAR(100) NOT NULL
             );
@@ -66,19 +65,19 @@ app.get("/api/products/category", async (req, res) => {
 
 app.put("/api/products/:id", async (req, res) => {
     const { id } = req.params;
-    const { product_name, product_description, product_code, price, rating, image_url, category } = req.body;
+    const { product_name, product_description, product_code, price, image_url, category } = req.body;
 
     // Validación de campos requeridos
-    if (!product_name || !product_code || !price || !category) {
+    if (!product_name || !product_description || !product_code || !price || !image_url || !category) {
         return res.status(400).json({ error: "Faltan campos requeridos" });
     }
 
     try {
         const result = await pool.query(
             `UPDATE products
-             SET product_name = $1, product_description = $2, product_code = $3, price = $4, rating = $5, image_url = $6, category = $7
-             WHERE id = $8 RETURNING *`,
-            [product_name, product_description, product_code, price, rating, image_url, category, id]
+             SET product_name = $1, product_description = $2, product_code = $3, price = $4, image_url = $5, category = $6
+             WHERE id = $7 RETURNING *`,
+            [product_name, product_description, product_code, price, image_url, category, id]
         );
 
         if (result.rowCount === 0) {
