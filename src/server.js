@@ -63,7 +63,7 @@ app.get("/api/products/category", async (req, res) => {
     }
 });
 
-app.put("/api/products/:id", async (req, res) => {
+app.put("/api/products/:id", async (req, res) => { 
     const { id } = req.params;
     const { product_name, product_description, product_code, price, image_url, category } = req.body;
 
@@ -73,6 +73,9 @@ app.put("/api/products/:id", async (req, res) => {
     }
 
     try {
+        console.log("Request Body:", req.body);
+        console.log("Product ID:", id);
+
         const result = await pool.query(
             `UPDATE products
              SET product_name = $1, product_description = $2, product_code = $3, price = $4, image_url = $5, category = $6
@@ -86,19 +89,23 @@ app.put("/api/products/:id", async (req, res) => {
 
         res.json({ message: "Producto actualizado", product: result.rows[0] });
     } catch (error) {
-        console.error("Error actualizando el producto: ", error);
-        res.status(500).json({ error: "Error actualizando el producto" });
+        console.error("Error actualizando el producto: ", error.message);
+        res.status(500).json({ error: "Error actualizando el producto, INTENTELO MAS TARDE" });
     }
 });
 
+
 app.delete("/api/products/code/:product_code", async (req, res) => {
     const { product_code } = req.params;
+    console.log("Eliminando producto con código:", product_code);
 
     try {
         const result = await pool.query(
             "DELETE FROM products WHERE product_code = $1 RETURNING *",
             [product_code]
         );
+        
+        console.log("Resultado de la eliminación:", result);
 
         if (result.rowCount === 0) {
             return res.status(404).json({ message: "Producto no encontrado" });
