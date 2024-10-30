@@ -50,7 +50,7 @@ app.get("/api/products/category", async (req, res) => {
     }
 
     try {
-        const result = await pool.query("SELECT * FROM products WHERE category = $1", [category]);
+        const result = await pool.query("SELECT * FROM products WHERE LOWER(category) LIKE LOWER($1)", [`%${category}%`]);
         
         if (result.rows.length === 0) {
             return res.status(404).json({ message: "No se encontraron productos en esta categoría" });
@@ -122,7 +122,7 @@ app.get("/api/products", async (req, res) => {
 });
 
 app.post("/api/products", async (req, res) => {
-    const { product_name, product_description, product_code, price, rating, image_url, category } = req.body;
+    const { product_name, product_description, product_code, price, image_url, category } = req.body;
 
     // Validación de campos requeridos
     if (!product_name || !product_code || !price || !category) {
@@ -131,9 +131,9 @@ app.post("/api/products", async (req, res) => {
 
     try {
         const result = await pool.query(
-            `INSERT INTO products (product_name, product_description, product_code, price, rating, image_url, category)
-             VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *`,
-            [product_name, product_description, product_code, price, rating, image_url, category]
+            `INSERT INTO products (product_name, product_description, product_code, price, image_url, category)
+             VALUES ($1, $2, $3, $4, $5, $6) RETURNING *`,
+            [product_name, product_description, product_code, price, image_url, category]
         );
         res.status(201).json(result.rows[0]);
     } catch (error) {
