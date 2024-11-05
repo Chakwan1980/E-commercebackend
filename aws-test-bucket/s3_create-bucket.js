@@ -8,7 +8,7 @@ const s3 = new AWS.S3({ apiVersion: "2006-03-01" });
 
 // Crear los parámetros para llamar a createBucket
 const bucketParams = {
-    Bucket: "rosa-test-bucket-23102024",
+    Bucket: "rosa-test-bucket-05112024",
 };
 
 // Llamar a S3 para crear el bucket

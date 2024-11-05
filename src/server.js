@@ -1,3 +1,5 @@
+
+
 import express from 'express';
 import dotenv from 'dotenv';
 import cors from 'cors';
@@ -31,10 +33,13 @@ const createProductTable = async () => {
             );
         `);
         console.log("Tabla de productos creada exitosamente");
+        
     } catch (error) {
         console.error("Error creando la tabla de productos: ", error);
     }
 };
+
+
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -146,3 +151,4 @@ app.listen(PORT, async () => {
     console.log(`Servidor corriendo en http://localhost:${PORT}`);
     await createProductTable();
 });
+

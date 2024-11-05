@@ -29,7 +29,7 @@ const uploadFile = (filePath) => {
       }
 
       const uploadParams = {
-          Bucket: "rosa-test-bucket-23102024",
+          Bucket: "rosa-test-bucket-05112024",
           Key: path.basename(filePath),
           Body: fileStream,
           ContentType: contentType, // Asegúrate de que el ContentType es correcto
@@ -62,14 +62,27 @@ const uploadMultipleFiles = async (filePaths) => {
 
 // Aquí especificas las rutas de los archivos que deseas subir
 const filesToUpload = [
-  "C:\\Abschlussprojekt\\E-commerce\\e-commerce-backend\\aws-test-bucket\\images\\fotoportada.png",
-  "C:\\Abschlussprojekt\\E-commerce\\e-commerce-backend\\aws-test-bucket\\images\\mantelblanco.png",
-  "C:\\Abschlussprojekt\\E-commerce\\e-commerce-backend\\aws-test-bucket\\images\\posavasos.png",
-  "C:\\Abschlussprojekt\\E-commerce\\e-commerce-backend\\aws-test-bucket\\images\\servilletasdecolores.png",
-  "C:\\Abschlussprojekt\\E-commerce\\e-commerce-backend\\aws-test-bucket\\images\\servilletasycuchara.png",
-  "C:\\Abschlussprojekt\\E-commerce\\e-commerce-backend\\aws-test-bucket\\images\\sevilletasazules.png",
-  "C:\\Abschlussprojekt\\E-commerce\\e-commerce-backend\\aws-test-bucket\\images\\toallascocina.png",
-  "C:\\Abschlussprojekt\\E-commerce\\e-commerce-backend\\aws-test-bucket\\images\\vestido.png",
+  "C://Abschlussprojekt//E-commerce//e-commerce-backend//aws-test-bucket//images//fotoportada.png",
+  "C://Abschlussprojekt//E-commerce//e-commerce-backend//aws-test-bucket//images//mantelblanco.png",
+  "C://Abschlussprojekt//E-commerce//e-commerce-backend//aws-test-bucket//images//posavasos.png",
+  "C://Abschlussprojekt//E-commerce//e-commerce-backend//aws-test-bucket//images//servilletasdecolores.png",
+  "C://Abschlussprojekt//E-commerce//e-commerce-backend//aws-test-bucket//images//servilletasycuchara.png",
+  "C://Abschlussprojekt//E-commerce//e-commerce-backend//aws-test-bucket//images//sevilletasazules.png",
+  "C://Abschlussprojekt//E-commerce//e-commerce-backend//aws-test-bucket//images//toallascocina.png",
+  "C://Abschlussprojekt//E-commerce//e-commerce-backend//aws-test-bucket//images//vestido.png",
+  "C://Abschlussprojekt//E-commerce//e-commerce-frontend//src//fotos//Bordando.png",
+  "C://Abschlussprojekt//E-commerce//e-commerce-frontend//src//fotos//bosaregalo.png",
+  "C://Abschlussprojekt//E-commerce//e-commerce-frontend//src//fotos//camisetaGallo.png",
+  "C://Abschlussprojekt//E-commerce//e-commerce-frontend//src//fotos//camisetasbordadas.png",
+  "C://Abschlussprojekt//E-commerce//e-commerce-frontend//src//fotos//camisetasvariadas.png",
+  "C://Abschlussprojekt//E-commerce//e-commerce-frontend//src//fotos//cart.jpg",
+  "C://Abschlussprojekt//E-commerce//e-commerce-frontend//src//fotos//ChaquetaBeige.png",
+  "C://Abschlussprojekt//E-commerce//e-commerce-frontend//src//fotos//cojines.png",
+  "C://Abschlussprojekt//E-commerce//e-commerce-frontend//src//fotos//Gorra.png",
+  "C://Abschlussprojekt//E-commerce//e-commerce-frontend//src//fotos//icono.gif",
+  "C://Abschlussprojekt//E-commerce//e-commerce-frontend//src//fotos//VestidoNegro.png",
+  "C://Abschlussprojekt//E-commerce//e-commerce-frontend//src//fotos//vestidonina.png",
+
 ];
 
 // Llama a la función para subir múltiples archivos
