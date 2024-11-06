@@ -8,11 +8,6 @@
     "start": "node src/server.js",
     "dev": "nodemon src/server.js"
   },
-  "jest": {
-    "transform": {
-      "^.+//.jsx?$": "babel-jest"
-    }
-  },
   "keywords": [],
   "author": "",
   "license": "ISC",

@@ -1,14 +1,7 @@
-// babel.config.cjs
+// babel.config.js
 module.exports = {
-    presets: [
-      ['@babel/preset-env', {
-        targets: {
-          node: 'current'
-        },
-        modules: 'auto'
-      }],
-      '@babel/preset-react' // Si estás usando React
-    ],
-    plugins: [],
-  };
-  
+  presets: [
+    '@babel/preset-env',  // Para transformar la sintaxis de JavaScript moderna (ES6+)
+    '@babel/preset-react' // Para transformar JSX en React
+  ],
+};
