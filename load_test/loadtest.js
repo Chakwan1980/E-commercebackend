@@ -12,7 +12,7 @@ export let options = {
 };
 
 export default function (){
-    http.get('http://localhost:3030/api/products');
+    http.get('http://localhost:3030/api/contacts');
     sleep(1);
 }
 
