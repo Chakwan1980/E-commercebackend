@@ -21,11 +21,11 @@ spec:
   selector: 
     matchLabels:
       app: e-commerce-app-api   
-  template:  # Cambiado de "temple" a "template"
+  template: 
     metadata:
       labels:
         app: e-commerce-app-api
-        environment: test  # Cambiado de "enviroment" a "environment"
+        environment: test  
     spec:
       containers:
         - name: e-commerce-app-api

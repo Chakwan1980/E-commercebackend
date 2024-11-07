@@ -1,6 +1,6 @@
 import pool from '../config/db.js';
 
-// Get all products
+
 export const getAllProducts = async (req, res) => {
     try {
         const result = await pool.query("SELECT * FROM products");
@@ -11,7 +11,6 @@ export const getAllProducts = async (req, res) => {
     }
 };
 
-// Get products by category
 export const getProductsByCategory = async (req, res) => {
     const { category } = req.query;
     if (!category) return res.status(400).json({ error: "Se requiere una categoría" });
@@ -27,7 +26,7 @@ export const getProductsByCategory = async (req, res) => {
     }
 };
 
-// Create a new product
+// put
 export const createProduct = async (req, res) => {
     const { product_name, product_description, product_code, price, image_url, category } = req.body;
 
@@ -49,12 +48,12 @@ export const createProduct = async (req, res) => {
     }
 };
 
-// Update an existing product by ID
+//put
 export const updateProduct = async (req, res) => {
     const { id } = req.params;
     const { product_name, product_description, product_code, price, image_url, category } = req.body;
 
-    // Validación de campos requeridos
+ 
     if (!product_name || !product_description || !product_code || !price || !image_url || !category) {
         return res.status(400).json({ error: "Faltan campos requeridos" });
     }
@@ -78,23 +77,25 @@ export const updateProduct = async (req, res) => {
     }
 };
 
-// Delete a product by product code
-export const deleteProductByCode = async (req, res) => {
-    const { product_code } = req.params;
+
+
+export const deleteProductById = async (req, res) => {
+    const { id } = req.params;
+    console.log('Recibiendo id:', id); 
 
     try {
         const result = await pool.query(
-            "DELETE FROM products WHERE product_code = $1 RETURNING *",
-            [product_code]
+            "DELETE FROM products WHERE id = $1 RETURNING *",
+            [id]
         );
 
         if (result.rowCount === 0) {
             return res.status(404).json({ message: "Producto no encontrado" });
         }
 
-        res.json({ message: "Producto eliminado" });
+        res.json({ message: "Producto eliminado", producto: result.rows[0] });
     } catch (error) {
-        console.error("Error eliminando el producto: ", error);
+        console.error("Error eliminando el producto:", error);
         res.status(500).json({ error: "Error eliminando el producto" });
     }
 };

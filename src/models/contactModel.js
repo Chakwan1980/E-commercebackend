@@ -11,7 +11,8 @@ export const createContactTable = async () => {
                 last_name VARCHAR(255) NOT NULL,
                 phone VARCHAR(20) NOT NULL,
                 email VARCHAR(255) NOT NULL UNIQUE,
-                address TEXT
+                address TEXT,
+                message TEXT
             );
         `);
         console.log("Tabla de contactos creada exitosamente");

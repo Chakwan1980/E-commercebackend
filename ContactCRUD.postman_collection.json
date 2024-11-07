@@ -1,0 +1,84 @@
+{
+    "info": {
+      "name": "Contact CRUD API",
+      "description": "Colección para probar las operaciones CRUD en /api/contacts",
+      "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "item": [
+      {
+        "name": "Get All Contacts",
+        "request": {
+          "method": "GET",
+          "header": [],
+          "url": {
+            "raw": "http://localhost:3030/api/contacts",
+            "protocol": "http",
+            "host": ["localhost"],
+            "port": "3030",
+            "path": ["api", "contacts"]
+          }
+        }
+      },
+      {
+        "name": "Create New Contact",
+        "request": {
+          "method": "POST",
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": {
+            "mode": "raw",
+            "raw": "{\n  \"name\": \"John\",\n  \"last_name\": \"Doe\",\n  \"phone\": \"1234567890\",\n  \"email\": \"johndoe@example.com\",\n  \"address\": \"123 Main St\",\n  \"message\": \"Hello, this is a test message\"\n}"
+          },
+          "url": {
+            "raw": "http://localhost:3030/api/contacts",
+            "protocol": "http",
+            "host": ["localhost"],
+            "port": "3030",
+            "path": ["api", "contacts"]
+          }
+        }
+      },
+      {
+        "name": "Update Contact",
+        "request": {
+          "method": "PUT",
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": {
+            "mode": "raw",
+            "raw": "{\n  \"name\": \"Jane\",\n  \"last_name\": \"Doe\",\n  \"phone\": \"0987654321\",\n  \"email\": \"janedoe@example.com\",\n  \"address\": \"456 Main St\",\n  \"message\": \"This is an updated message\"\n}"
+          },
+          "url": {
+            "raw": "http://localhost:3030/api/contacts/1",
+            "protocol": "http",
+            "host": ["localhost"],
+            "port": "3030",
+            "path": ["api", "contacts", "1"]
+          }
+        }
+      },
+      {
+        "name": "Delete Contact",
+        "request": {
+          "method": "DELETE",
+          "header": [],
+          "url": {
+            "raw": "http://localhost:3030/api/contacts/1",
+            "protocol": "http",
+            "host": ["localhost"],
+            "port": "3030",
+            "path": ["api", "contacts", "1"]
+          }
+        }
+      }
+    ]
+  }
+  

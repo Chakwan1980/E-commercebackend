@@ -16,5 +16,5 @@ export default function (){
     sleep(1);
 }
 
-// k6 run C:\Abschlussprojekt\E-commerce\e-commerce-backend\load_test\loadtest.js
+//  k6 run C:\Abschlussprojekt\E-commerce\e-commerce-backend\load_test\loadtest.js
 
